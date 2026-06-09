@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420">
+  <defs>
+    <linearGradient id="gradRed" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8f3033" />
+      <stop offset="100%" stop-color="#5f1217" />
+    </linearGradient>
+  </defs>
+  <rect width="420" height="420" rx="40" fill="url(#gradRed)" />
+  <ellipse cx="210" cy="160" rx="65" ry="95" fill="#c1494c" opacity="0.85" />
+  <path d="M175 280 C190 230, 230 230, 245 280" stroke="#3f1012" stroke-width="16" fill="none" stroke-linecap="round" />
+  <path d="M175 120 L245 120 L260 260 L160 260 Z" fill="#741718" opacity="0.85" />
+  <text x="210" y="365" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#f5d9c8">Malestri</text>
+</svg>

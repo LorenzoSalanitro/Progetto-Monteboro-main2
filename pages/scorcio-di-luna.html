@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scorcio di Luna - Tenute di Monteboro</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">
+        <img class="brand-logo" src="../images/fwfilevari/Pittogramma/Rosso_sfondo-trasparente.png" alt="Logo Tenute di Monteboro" />
+        <img class="brand-title-image" src="../images/fwfilevari/Colori_sfondo-trasparente.png" alt="Tenute di Monteboro" />
+      </a>
+      <div class="header-actions">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-menu" data-i18n="nav.menu">
+          Menu
+        </button>
+        <nav id="main-menu" class="main-nav" aria-label="Menu principale">
+          <ul class="nav-list">
+            <li><a href="../index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="origins.html" data-i18n="nav.origins">Le origini</a></li>
+            <li><a href="wines.html" data-i18n="nav.about">Vini</a></li>
+            <li><a href="../index.html#contact-footer" data-i18n="nav.contact">Contatti</a></li>
+          </ul>
+        </nav>
+        <div class="lang-menu" aria-haspopup="true">
+          <button class="lang-toggle nav-toggle" type="button" aria-expanded="false">IT</button>
+          <ul class="lang-dropdown" aria-label="Seleziona lingua">
+            <li><button type="button" data-lang="it">Italiano</button></li>
+            <li><button type="button" data-lang="en">English</button></li>
+            <li><button type="button" data-lang="de">Deutsch</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wine-detail-page wine-detail-page--white">
+    <section class="wine-detail-section container">
+      <div class="wine-detail-layout">
+        <div class="wine-detail-visual">
+          <img src="../images/fwfilevari/scorcio.jpg" alt="Bottiglia di Scorcio di Luna" />
+        </div>
+        <div class="wine-detail-content">
+          <p class="wine-detail-kicker">Tenute di Monteboro</p>
+          <h2 class="wine-detail-title" data-i18n="wine.white.title">Scorcio di Luna</h2>
+          <div data-i18n="wine.white.description">
+            <!-- Il contenuto viene caricato da main.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact-footer" class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-copy">
+        <h2 data-i18n="footer.heading">Contatti della cantina</h2>
+        <p data-i18n="footer.description">Usa questa tabella per trovare i riferimenti della nostra tenuta e prenotare una degustazione.</p>
+      </div>
+      <div class="table-wrapper">
+        <table class="contact-table">
+          <thead>
+            <tr>
+              <th data-i18n="table.ref">Riferimento</th>
+              <th data-i18n="table.details">Dettagli</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th data-i18n="table.phone">Telefono</th>
+              <td><a href="tel:+393929539239">+39 392 9539239</a></td>
+            </tr>
+            <tr>
+              <th data-i18n="table.email">Email</th>
+              <td><a href="mailto:info@tenutedimonteboro.it?subject=Richiesta%20informazioni">info@tenutedimonteboro.it</a></td>
+            </tr>
+            <tr>
+              <th data-i18n="table.address">Indirizzo</th>
+              <td><a href="https://www.google.com/maps/search/?api=1&query=Via%20spicchiello%202%2C%2050055%20Lastra%20a%20Signa%20%28FI%29" target="_blank" rel="noopener noreferrer">Via spicchiello 2, 50055 Lastra a Signa (FI)</a></td>
+            </tr>
+            <tr>
+              <th>Instagram</th>
+              <td><a href="https://www.instagram.com/tenutedimonteboro/" target="_blank" rel="noopener noreferrer">@tenutedimonteboro</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="footer-note" data-i18n="footer.note">© 2026 Progetto Monteboro. Tutti i diritti riservati.</p>
+  </footer>
+
+  <script src="../scripts/main.js"></script>
+</body>
+</html>
