@@ -6,6 +6,13 @@ const translations = {
     "nav.origins": "Le origini",
     "nav.contact": "Contatti",
     "nav.store": "Store",
+    "cart.title": "Il tuo carrello",
+    "cart.empty": "Il tuo carrello è attualmente vuoto.",
+    "cart.continueShopping": "Continua lo shopping",
+    "cart.checkout": "Acquista",
+    "cart.totalItems": "Totale articoli:",
+    "store.buy": "Aggiungi al carrello",
+    "store.quantity": "Quantità",
     "hero.eyebrow": "Showroom dei vini",
     "hero.heading": "Scorcio di Luna e Malestri",
     "hero.paragraph": "Scopri le nostre etichette esclusive: il bianco elegante Scorcio di Luna e il rosso intenso Malestri.",
@@ -63,6 +70,13 @@ const translations = {
     "nav.origins": "Origins",
     "nav.contact": "Contact",
     "nav.store": "Store",
+    "cart.title": "Your cart",
+    "cart.empty": "Your cart is currently empty.",
+    "cart.continueShopping": "Continue shopping",
+    "cart.checkout": "Purchase",
+    "cart.totalItems": "Total items:",
+    "store.buy": "Add to cart",
+    "store.quantity": "Quantity",
     "hero.eyebrow": "Wine showroom",
     "hero.heading": "Scorcio di Luna and Malestri",
     "hero.paragraph": "Discover our exclusive labels: the elegant white Scorcio di Luna and the intense red Malestri.",
@@ -120,6 +134,13 @@ const translations = {
     "nav.origins": "Ursprünge",
     "nav.contact": "Kontakt",
     "nav.store": "Store",
+    "cart.title": "Ihr Warenkorb",
+    "cart.empty": "Ihr Warenkorb ist derzeit leer.",
+    "cart.continueShopping": "Weiter einkaufen",
+    "cart.checkout": "Kaufen",
+    "cart.totalItems": "Gesamtartikel:",
+    "store.buy": "In den Warenkorb legen",
+    "store.quantity": "Menge",
     "hero.eyebrow": "Weinshowroom",
     "hero.heading": "Scorcio di Luna und Malestri",
     "hero.paragraph": "Entdecken Sie unsere exklusiven Etiketten: der elegante Weißwein Scorcio di Luna und der intensive Rotwein Malestri.",
@@ -215,6 +236,66 @@ function closeLanguageMenu() {
   const langToggle = document.querySelector(".lang-toggle");
   if (langMenu) langMenu.classList.remove("open");
   if (langToggle) langToggle.setAttribute("aria-expanded", "false");
+}
+
+/**
+ * Funzioni per la gestione del carrello (localStorage)
+ */
+function getCart() {
+  try {
+    const cart = localStorage.getItem('shoppingCart');
+    return cart ? JSON.parse(cart) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  try {
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+  } catch (e) {}
+}
+
+function addToCart(item) {
+  const cart = getCart();
+  const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += item.quantity;
+  } else {
+    cart.push(item);
+  }
+  saveCart(cart);
+}
+
+/**
+ * Renderizza gli articoli nella pagina del carrello.
+ */
+function renderCartPage() {
+  const container = document.getElementById('cart-items-container');
+  if (!container) return;
+  const cart = getCart();
+  const emptyMsg = document.getElementById('empty-cart-message');
+  const summary = document.getElementById('cart-summary');
+  const totalItemsSpan = document.getElementById('cart-total-items');
+  container.innerHTML = '';
+  if (cart.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = 'block';
+    if (summary) summary.style.display = 'none';
+  } else {
+    if (emptyMsg) emptyMsg.style.display = 'none';
+    const ul = document.createElement('ul');
+    ul.style.listStyle = 'none';
+    ul.style.padding = '0';
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.style.cssText = 'display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border);';
+      li.innerHTML = `<span>${item.name}</span><strong>x${item.quantity}</strong>`;
+      ul.appendChild(li);
+    });
+    container.appendChild(ul);
+    if (totalItemsSpan) totalItemsSpan.textContent = cart.reduce((s, i) => s + i.quantity, 0);
+    if (summary) summary.style.display = 'block';
+  }
 }
 
 function initCookieBanner() {
@@ -374,6 +455,48 @@ function initButtonStyles() {
   document.head.appendChild(style);
 }
 
+/**
+ * Inizializza le interazioni per i prodotti nello store (selettori di quantità e pulsanti acquista).
+ */
+function initStoreProductInteractions() {
+  document.querySelectorAll('.quantity-selector').forEach(selector => {
+    const minusBtn = selector.querySelector('.minus-btn');
+    const plusBtn = selector.querySelector('.plus-btn');
+    const quantityDisplay = selector.querySelector('.quantity-display');
+    let quantity = parseInt(quantityDisplay.textContent);
+
+    minusBtn.addEventListener('click', () => {
+      if (quantity > 1) {
+        quantity--;
+        quantityDisplay.textContent = quantity;
+      }
+    });
+
+    plusBtn.addEventListener('click', () => {
+      quantity++;
+      quantityDisplay.textContent = quantity;
+    });
+  });
+
+  // Handle buy button clicks
+  document.querySelectorAll('.store-actions .button').forEach(buyButton => {
+    buyButton.addEventListener('click', () => {
+      const wineCard = buyButton.closest('.wine-card');
+      if (wineCard) {
+        const wineId = wineCard.dataset.wineId;
+        const wineName = wineCard.querySelector('h2').textContent;
+        const quantity = parseInt(wineCard.querySelector('.quantity-selector .quantity-display').textContent);
+        if (wineId && wineName && quantity > 0) {
+          addToCart({ id: wineId, name: wineName, quantity: quantity });
+          alert(wineName + " aggiunto al carrello!");
+          // No redirect here, stay on the store page
+        } else { console.error("Could not add item to cart: missing data."); }
+      }
+    });
+  });
+}
+
+// Global DOMContentLoaded listener
 document.addEventListener("DOMContentLoaded", function () {
   const navToggle = document.querySelector(".nav-toggle");
   const mainNav = document.querySelector(".main-nav");
@@ -384,7 +507,9 @@ document.addEventListener("DOMContentLoaded", function () {
   initButtonStyles();
   initCookieBanner();
   const defaultLang = getStoredLanguage();
+  initStoreProductInteractions(); // Initialize store product interactions
   applyLanguage(defaultLang);
+  renderCartPage(); // Render cart if on cart page
 
   if (navToggle && mainNav) {
     navToggle.addEventListener("click", function () {

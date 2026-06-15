@@ -25,7 +25,7 @@
             <li><a href="store.html" data-i18n="nav.store">Store</a></li>
             <li><a href="#contact-footer" data-i18n="nav.contact">Contatti</a></li>
           </ul>
-        </nav>
+        </nav>        <a href="cart.html" class="cart-icon-link" aria-label="Carrello">🛒</a>
         <div class="lang-menu" aria-haspopup="true">
           <button class="lang-toggle nav-toggle" type="button" aria-expanded="false">IT</button>
           <ul class="lang-dropdown" aria-label="Seleziona lingua">
@@ -39,7 +39,50 @@
   </header>
 
   <main>
-    <!-- Contenuto vuoto come richiesto -->
+    <section class="store-section container">
+      <div class="wine-grid">
+        <!-- Scorcio di Luna -->
+        <article class="wine-card wine-card--white" data-wine-id="scorcio-di-luna">
+          <div class="wine-photo">
+            <img src="../images/fwfilevari/scorcio.jpg" alt="Scorcio di Luna" />
+          </div>
+          <div class="wine-content">
+            <p class="wine-label-brand">Tenute di Monteboro</p>
+            <h2 data-i18n="wine.white.title">Scorcio di Luna</h2>
+            <p class="wine-price">15.00 €</p>
+            <div class="store-actions">
+              <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" type="button">-</button>
+                <span class="quantity-display" id="qty-scorcio">1</span>
+                <button class="quantity-btn plus-btn" type="button">+</button>
+              </div>
+              <button class="button button--inverted" data-i18n="store.buy">Acquista</button>
+            </div>
+          </div>
+        </article>
+
+
+        <!-- Malestri -->
+        <article class="wine-card wine-card--red" data-wine-id="malestri">
+          <div class="wine-photo">
+            <img src="../images/fwfilevari/malestri.jpg" alt="Malestri" />
+          </div>
+          <div class="wine-content">
+            <p class="wine-label-brand">Tenute di Monteboro</p>
+            <h2 data-i18n="wine.red.title">Malestri</h2>
+            <p class="wine-price">15.00 €</p>
+            <div class="store-actions">
+              <div class="quantity-selector">
+                <button class="quantity-btn minus-btn" type="button">-</button>
+                <span class="quantity-display" id="qty-malestri">1</span>
+                <button class="quantity-btn plus-btn" type="button">+</button>
+              </div>
+              <button class="button button--inverted" data-i18n="store.buy">Acquista</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer id="contact-footer" class="site-footer">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scorcio di Luna - Tenute di Monteboro</title>
+  <title>Carrello - Tenute di Monteboro</title>
   <link rel="stylesheet" href="../styles/style.css" />
 </head>
 <body>
@@ -38,18 +38,17 @@
     </div>
   </header>
 
-  <main class="wine-detail-page wine-detail-page--white">
-    <section class="wine-detail-section container">
-      <div class="wine-detail-layout">
-        <div class="wine-detail-visual">
-          <img src="../images/fwfilevari/scorcio.jpg" alt="Bottiglia di Scorcio di Luna" />
-        </div>
-        <div class="wine-detail-content">
-          <p class="wine-detail-kicker">Tenute di Monteboro</p>
-          <h2 class="wine-detail-title" data-i18n="wine.white.title">Scorcio di Luna</h2>
-          <div data-i18n="wine.white.description">
-            <!-- Il contenuto viene caricato da main.js -->
-          </div>
+  <main>
+    <section class="container" style="padding: 3rem 0;">
+      <h1 data-i18n="cart.title">Il tuo carrello</h1>
+      <div id="cart-items-container" style="margin-top: 2rem;">
+        <p id="empty-cart-message" data-i18n="cart.empty" style="text-align: center;"></p>
+      </div>
+      <div id="cart-summary" style="margin-top: 2rem; text-align: right; display: none;">
+        <p><span data-i18n="cart.totalItems"></span> <span id="cart-total-items">0</span></p>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+          <a href="store.html" class="button secondary" data-i18n="cart.continueShopping">Continua lo shopping</a>
+          <button class="button" id="checkout-button" data-i18n="cart.checkout">Acquista</button>
         </div>
       </div>
     </section>
@@ -58,41 +57,56 @@
   <footer id="contact-footer" class="site-footer">
     <div class="container footer-grid">
       <div class="footer-copy">
-        <h2 data-i18n="footer.heading">Contatti della cantina</h2>
-        <p data-i18n="footer.description">Usa questa tabella per trovare i riferimenti della nostra tenuta e prenotare una degustazione.</p>
+        <h2>Contatti della cantina</h2>
+        <p>Usa questa tabella per trovare i riferimenti della nostra tenuta e prenotare una degustazione.</p>
       </div>
       <div class="table-wrapper">
         <table class="contact-table">
           <thead>
             <tr>
-              <th data-i18n="table.ref">Riferimento</th>
-              <th data-i18n="table.details">Dettagli</th>
+              <th>Riferimento</th>
+              <th>Dettagli</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th data-i18n="table.phone">Telefono</th>
+              <th>Telefono</th>
               <td><a href="tel:+393929539239">+39 392 9539239</a></td>
             </tr>
             <tr>
-              <th data-i18n="table.email">Email</th>
+              <th>Email</th>
               <td><a href="mailto:info@tenutedimonteboro.it?subject=Richiesta%20informazioni">info@tenutedimonteboro.it</a></td>
             </tr>
             <tr>
-              <th data-i18n="table.address">Indirizzo</th>
+              <th>Indirizzo</th>
               <td><a href="https://www.google.com/maps/search/?api=1&query=Via%20spicchiello%202%2C%2050055%20Lastra%20a%20Signa%20%28FI%29" target="_blank" rel="noopener noreferrer">Via spicchiello 2, 50055 Lastra a Signa (FI)</a></td>
             </tr>
             <tr>
               <th>Instagram</th>
               <td><a href="https://www.instagram.com/tenutedimonteboro/" target="_blank" rel="noopener noreferrer">@tenutedimonteboro</a></td>
             </tr>
+            <tr>
+              <th>Partita IVA</th>
+              <td>07475940487</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <p class="footer-note" data-i18n="footer.note">© 2026 Progetto Monteboro. Tutti i diritti riservati.</p>
+    <p class="footer-note">© 2026 Progetto Monteboro. Tutti i diritti riservati.</p>
   </footer>
 
   <script src="../scripts/main.js"></script>
+  <script>
+    // Semplice listener per il tasto acquista finale
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkoutBtn = document.getElementById('checkout-button');
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+          alert('Grazie per il tuo acquisto! Questa funzionalità verrà implementata presto.');
+        });
+      }
+    });
+  </script>
 </body>
 </html>

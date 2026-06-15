@@ -631,6 +631,128 @@ main {
   font-size: 0.95rem;
 }
 
+/* Store Styles */
+.store-section {
+  padding: 3rem 0;
+}
+
+.wine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 2rem;
+}
+
+.wine-price {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.store-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Smaller gap for buttons */
+  border: 1px solid var(--border);
+  border-radius: 999px; /* Make it rounded like the buttons */
+  padding: 0.2rem; /* Some padding inside the selector */
+}
+
+.quantity-btn {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 32px; /* Fixed width for buttons */
+  height: 32px; /* Fixed height for buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Make them circular */
+  transition: background 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.quantity-display {
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 20px; /* Ensure enough space for numbers */
+  text-align: center;
+}
+
+/* New style for the inverted button */
+.button--inverted {
+  background: var(--bg); /* Page background color */
+  color: var(--text); /* Text color for contrast */
+  border: 1px solid var(--border); /* Add a border for definition */
+}
+
+.button--inverted:hover {
+  background: var(--border); /* Slightly darker on hover */
+  transform: translateY(-1px);
+}
+
+.cart-icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px; /* Match nav-toggle height */
+  width: 32px; /* Make it square */
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: transparent;
+  font-size: 1.2rem; /* Adjust emoji size */
+  text-decoration: none;
+  color: var(--text);
+  border-radius: 50%; /* Make it circular */
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cart-icon-link:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px; /* Adjust as needed */
+  right: -8px; /* Adjust as needed */
+  background-color: #8b0000; /* Red badge */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+  box-shadow: 0 0 0 2px var(--surface); /* White border around badge */
+}
+
+@media (min-width: 768px) {
+  .cart-icon-link { height: 40px; width: 40px; font-size: 1.4rem; }
+}
+
+.quantity-selector input {
+  width: 60px;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: center;
+  font-family: inherit;
+}
+
 .origins-page {
   padding: 4rem 0 5rem;
   min-height: 90vh;
