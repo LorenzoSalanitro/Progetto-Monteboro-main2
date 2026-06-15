@@ -310,18 +310,20 @@ function initButtonStyles() {
     /* TELEFONO: Layout impilato a sinistra */
     @media (max-width: 767px) {
       .header-inner {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
+        display: flex !important; /* Assicura il comportamento flexbox */
+        flex-direction: row !important; /* Allinea il brand e le azioni orizzontalmente */
+        justify-content: space-between !important; /* Sposta il brand a sinistra e le azioni a destra */
+        align-items: center !important; /* Centra verticalmente il brand e le azioni */
         gap: 10px !important;
         padding-left: 20px !important;
+        padding-right: 20px !important; /* Aggiunge padding a destra per consistenza */
       }
       .header-actions {
         display: flex !important;
         flex-direction: column !important;
-        align-items: flex-start !important;
+        align-items: flex-end !important; /* Allinea i pulsanti menu e lingua a destra */
         gap: 8px !important;
-        width: 100% !important;
+        width: auto !important; /* Permette al contenuto di dettare la larghezza */
       }
       /* Mostra il pulsante Menu su mobile */
       button.nav-toggle[data-i18n="nav.menu"] {
