@@ -7,10 +7,12 @@ const translations = {
     "nav.contact": "Contatti",
     "nav.store": "Store",
     "cart.title": "Il tuo carrello",
-    "cart.empty": "Il tuo carrello è attualmente vuoto.",
+    "cart.empty": "Il tuo carrello è vuoto",
     "cart.continueShopping": "Continua lo shopping",
+    "cart.clear": "Svuota carrello",
     "cart.checkout": "Acquista",
     "cart.totalItems": "Totale articoli:",
+    "cart.totalPrice": "Prezzo totale:",
     "store.buy": "Aggiungi al carrello",
     "store.quantity": "Quantità",
     "hero.eyebrow": "Showroom dei vini",
@@ -71,10 +73,12 @@ const translations = {
     "nav.contact": "Contact",
     "nav.store": "Store",
     "cart.title": "Your cart",
-    "cart.empty": "Your cart is currently empty.",
+    "cart.empty": "Your cart is empty",
     "cart.continueShopping": "Continue shopping",
+    "cart.clear": "Empty cart",
     "cart.checkout": "Purchase",
     "cart.totalItems": "Total items:",
+    "cart.totalPrice": "Total price:",
     "store.buy": "Add to cart",
     "store.quantity": "Quantity",
     "hero.eyebrow": "Wine showroom",
@@ -135,10 +139,12 @@ const translations = {
     "nav.contact": "Kontakt",
     "nav.store": "Store",
     "cart.title": "Ihr Warenkorb",
-    "cart.empty": "Ihr Warenkorb ist derzeit leer.",
+    "cart.empty": "Ihr Warenkorb ist leer",
     "cart.continueShopping": "Weiter einkaufen",
+    "cart.clear": "Warenkorb leeren",
     "cart.checkout": "Kaufen",
     "cart.totalItems": "Gesamtartikel:",
+    "cart.totalPrice": "Gesamtpreis:",
     "store.buy": "In den Warenkorb legen",
     "store.quantity": "Menge",
     "hero.eyebrow": "Weinshowroom",
@@ -277,25 +283,52 @@ function renderCartPage() {
   const emptyMsg = document.getElementById('empty-cart-message');
   const summary = document.getElementById('cart-summary');
   const totalItemsSpan = document.getElementById('cart-total-items');
+  const totalPriceSpan = document.getElementById('cart-total-price');
+  const emptyCartActions = document.getElementById('empty-cart-actions');
+
+  if (!container) return;
   container.innerHTML = '';
+
   if (cart.length === 0) {
     if (emptyMsg) emptyMsg.style.display = 'block';
     if (summary) summary.style.display = 'none';
+    if (emptyCartActions) emptyCartActions.style.display = 'block';
   } else {
     if (emptyMsg) emptyMsg.style.display = 'none';
+    if (emptyCartActions) emptyCartActions.style.display = 'none';
     const ul = document.createElement('ul');
     ul.style.listStyle = 'none';
     ul.style.padding = '0';
     cart.forEach(item => {
       const li = document.createElement('li');
-      li.style.cssText = 'display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border);';
-      li.innerHTML = `<span>${item.name}</span><strong>x${item.quantity}</strong>`;
+      li.style.cssText = 'display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border); gap: 1rem;';
+      
+      // Determina il percorso dell'immagine in base all'ID del vino
+      const imgSrc = item.id === 'malestri' ? '../images/fwfilevari/malestri.jpg' : '../images/fwfilevari/scorcio.jpg';
+      
+      li.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <img src="${imgSrc}" alt="${item.name}" style="width: 60px; height: auto; border-radius: 8px; background: #fbfaf3; border: 1px solid var(--border);">
+          <span style="font-weight: 600;">${item.name}</span>
+        </div>
+        <div class="quantity-selector" style="margin: 0;">
+          <button class="quantity-btn cart-minus-btn" data-id="${item.id}" type="button">-</button>
+          <span class="quantity-display">${item.quantity}</span>
+          <button class="quantity-btn cart-plus-btn" data-id="${item.id}" type="button">+</button>
+        </div>`;
       ul.appendChild(li);
     });
     container.appendChild(ul);
-    if (totalItemsSpan) totalItemsSpan.textContent = cart.reduce((s, i) => s + i.quantity, 0);
+
+    const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+    const totalPrice = totalItems * 15.00;
+
+    if (totalItemsSpan) totalItemsSpan.textContent = totalItems;
+    if (totalPriceSpan) totalPriceSpan.textContent = totalPrice.toFixed(2) + ' €';
     if (summary) summary.style.display = 'block';
   }
+  // Applica le traduzioni ai nuovi elementi generati
+  applyLanguage(getStoredLanguage());
 }
 
 function initCookieBanner() {
@@ -488,8 +521,8 @@ function initStoreProductInteractions() {
         const quantity = parseInt(wineCard.querySelector('.quantity-selector .quantity-display').textContent);
         if (wineId && wineName && quantity > 0) {
           addToCart({ id: wineId, name: wineName, quantity: quantity });
-          alert(wineName + " aggiunto al carrello!");
-          // No redirect here, stay on the store page
+          // Reindirizza alla pagina del carrello dopo l'aggiunta
+          window.location.href = 'cart.html';
         } else { console.error("Could not add item to cart: missing data."); }
       }
     });
@@ -510,6 +543,43 @@ document.addEventListener("DOMContentLoaded", function () {
   initStoreProductInteractions(); // Initialize store product interactions
   applyLanguage(defaultLang);
   renderCartPage(); // Render cart if on cart page
+
+  // Delegazione eventi per i bottoni + e - nel carrello
+  const cartContainer = document.getElementById('cart-items-container');
+  if (cartContainer) {
+    cartContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('.quantity-btn');
+      if (!btn) return;
+
+      const wineId = btn.dataset.id;
+      const isPlus = btn.classList.contains('cart-plus-btn');
+      let cart = getCart();
+      const index = cart.findIndex(i => i.id === wineId);
+
+      if (index > -1) {
+        if (isPlus) {
+          cart[index].quantity++;
+        } else {
+          if (cart[index].quantity > 1) {
+            cart[index].quantity--;
+          } else {
+            cart.splice(index, 1);
+          }
+        }
+        saveCart(cart);
+        renderCartPage();
+      }
+    });
+  }
+
+  // Listener per svuota carrello
+  const clearBtn = document.getElementById('clear-cart-button');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      saveCart([]);
+      renderCartPage();
+    });
+  }
 
   if (navToggle && mainNav) {
     navToggle.addEventListener("click", function () {
